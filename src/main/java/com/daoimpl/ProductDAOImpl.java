@@ -3,13 +3,10 @@ package com.daoimpl;
 import java.util.List;
 
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.dao.ProductDAO;
 import com.model.Product;
 
@@ -25,75 +22,74 @@ public class ProductDAOImpl implements ProductDAO {
 		
 		this.sessionFactory = sessionFactory;
 	}
-	@Transactional
-    public boolean saveProduct(Product product) 
-    {
-        try
-        {
-        
-        Session session=sessionFactory.getCurrentSession();
-		session.saveOrUpdate(product);
-		return true;
-        }
-        catch(Exception e)
-        {
-        	System.out.println(e.getMessage());
-        return false;
-        }
-    }	
+	public  void insertProduct(Product product) {
+		Session session=sessionFactory.openSession();
+		session.beginTransaction();
+		session.persist(product);
+		session.getTransaction().commit();
+	}
+    
+	@SuppressWarnings("unchecked")
+	public List<Product> retrieve() {
+		Session session=sessionFactory.openSession();
+		session.beginTransaction();
+		List<Product> li=session.createQuery("from Product").list();
+		session.getTransaction().commit();
+		return li;
+	}
+
+
+	public Product findByPID(int pid) {
+	Session session=sessionFactory.openSession();
+	Product p=null;
+	try{
+		session.beginTransaction();
+		p=(Product) session.get(Product.class,pid);
+		session.getTransaction().commit();
+		}
+	catch(HibernateException e)
+	{
+		e.printStackTrace();
+		session.getTransaction().rollback();
+	}
 	
-	 @Transactional
-     public List<Product> retrieveProduct() 
-     {
-         Session session=sessionFactory.openSession();
-         Query query=session.createQuery("from Product");
-         @SuppressWarnings("unchecked")
-         List<Product> listProduct=query.list();
-         session.close();
-         return listProduct;
-     }
-	 @Transactional
-		public Product getProductById(int id) {
-			String hql = "from" + " Product" + " where id=" + id;
-			Query query = sessionFactory.getCurrentSession().createQuery(hql);
-
-			@SuppressWarnings("unchecked")
-			List<Product> listProduct = (List<Product>) query.list();
-
-			if (listProduct != null && !listProduct.isEmpty()) {
-				return listProduct.get(0);
-			}
-
-			return null;
-		}
-	 
-	 @Transactional
-	 public void updateProduct(Product p){
-		 Session session=sessionFactory.openSession();
-		try{
-		 session.beginTransaction();
-		 session.update(p);
-		 session.getTransaction().commit();
-		}
-		catch(HibernateException e){
-			e.getStackTrace();
-			session.getTransaction().rollback();
-		}
-	 }
-	 
-	 @Transactional
-	 public void deleteProduct(int id){
-		 Session session=sessionFactory.openSession();
-		try{
-		 session.beginTransaction();
-		 session.delete(id);
-		 session.getTransaction().commit();
-		}
-		catch(HibernateException e){
-			e.getStackTrace();
-			session.getTransaction().rollback();
-		}
-	 }
-
-		
+	return p;
+	
 }
+
+@SuppressWarnings("unchecked")
+public List <Product> getProdByCatId( int cid) {
+	Session session=sessionFactory.openSession();
+	List<Product> prod= null;
+	try{
+		session.beginTransaction();
+		prod=session.createQuery("from product where cid=" +cid).list();
+		session.getTransaction().commit();
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		session.getTransaction().rollback();
+	}
+	
+	return prod;
+}
+
+public void deleteProd(int pid)
+{
+	Session session=sessionFactory.openSession();
+	session.beginTransaction();
+	Product p=(Product)session.get(Product.class,pid);
+	session.delete(p);
+	session.getTransaction().commit();
+}
+
+public void update(Product p) {
+	Session session=sessionFactory.openSession();
+	session.beginTransaction();
+	session.update(p);
+	session.getTransaction().commit();
+	
+}
+}
+

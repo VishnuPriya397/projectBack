@@ -6,11 +6,10 @@ import com.model.Supplier;
 
 public interface SupplierDAO {
 	
-
-	public boolean addSupplier(Supplier supplier);
-	public List<Supplier> retrieveSupplier();
-	public Supplier getSupplierById(int sid);
-	public Supplier removeSupplierById(int sid);
-
+	public void insertSupplier(Supplier supplier);
+	public List<Supplier> retrieve();
+	public Supplier findBySuppId(int sid);
+	public void updateSupp(Supplier s);
+	public void deleteSupp(int sid);
 
 }

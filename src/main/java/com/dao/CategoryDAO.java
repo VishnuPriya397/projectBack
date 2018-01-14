@@ -6,8 +6,10 @@ import com.model.Category;
 
 public interface CategoryDAO {
 
-	public boolean addCategory(Category category);
-	public List<Category> retrieveCategory();
-	public Category getCategoryById(int cid);
-	public Category removeCategoryById(int cid);
+	public void insertCategory(Category category);
+	public List<Category> retrieve();
+	public Category findByCatId(int cid);
+	public void updateCat(Category c);
+	public void deleteCat(int cid);
+
 }

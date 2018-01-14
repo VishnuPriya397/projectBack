@@ -2,13 +2,11 @@ package com.daoimpl;
 
 import java.util.List;
 
-import org.hibernate.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.dao.CategoryDAO;
 import com.model.Category;
 
@@ -18,64 +16,72 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public CategoryDAOImpl(){}
 	
 	@Autowired
-    private SessionFactory sessionFactory;
+    SessionFactory sessionFactory;
 	
 	  public  CategoryDAOImpl(SessionFactory sessionFactory)
 	  {
 		  this.sessionFactory=sessionFactory;
 	  }
 	  	
-	  
-	  	@Transactional
-	    public boolean addCategory(Category category) 
-	    {
-	        try
-	        {
-	        
-	        Session session=sessionFactory.getCurrentSession();
-			session.saveOrUpdate(category);
-			return true;
-	        }
-	        catch(Exception e)
-	        {
-	        	System.out.println(e.getMessage());
-	        return false;
-	        }
-	    }	
+	  public void insertCategory(Category category)
+		{
+		    Session session=sessionFactory.openSession();
+		   
+		    try{session.beginTransaction();
+		    session.saveOrUpdate(category);
+			session.getTransaction().commit();
+		    }
+		    catch(Exception e)
+		    {
+		    	System.out.println(e);
+		    	session.getTransaction().rollback();
+			    
+		    }
+		    
+		}
 	  	
-	  	 @Transactional
-	     public List<Category> retrieveCategory() 
-	     {
-	         Session session=sessionFactory.openSession();
-	         Query query=session.createQuery("from Category");
-	         @SuppressWarnings("unchecked")
-	         List<Category> listCategory=query.list();
-	         session.close();
-	         return listCategory;
-	     }
-
-	  	@Transactional
-		public Category getCategoryById(int cid) {
-			String q = "from"+" Category"+" where id=" + cid;
-			Query query = sessionFactory.getCurrentSession().createQuery(q);
-			
-			@SuppressWarnings("unchecked")
-			List<Category> listCategory = (List<Category>) query.list();
-			
-			if (listCategory != null && !listCategory.isEmpty()) {
-				return listCategory.get(0);
+	  @SuppressWarnings("unchecked")
+	public List<Category> retrieve()
+		{
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			List<Category>li=session.createQuery("from Category").list();
+			session.getTransaction().commit();
+			return li;
+		}
+		public Category findByCatId(int cid)
+		{
+			Session session=sessionFactory.openSession();
+			Category c=null;
+			try
+			{
+				session.beginTransaction();
+				c= (Category) session.get(Category.class, cid);
+				session.getTransaction().commit();
 			}
-			
-			return null;
+			catch(HibernateException e)
+			{
+				System.out.println(e.getMessage());
+				session.getTransaction().rollback();
+			}
+			return c;
 		}
 
-		@Transactional
-		public Category removeCategoryById(int cid) {
-			Category CategoryToDelete = new Category();
-			CategoryToDelete.setCid(cid);
-			sessionFactory.getCurrentSession().delete(CategoryToDelete);
-			return CategoryToDelete;
+		public void updateCat(Category c)
+		{
+		Session session=sessionFactory.openSession();
+		session.beginTransaction();
+		session.update(c);
+		session.getTransaction().commit();
 		}
-	  	
+		
+		public void deleteCat(int cid)
+		{
+			Session session=sessionFactory.openSession();
+			session.beginTransaction();
+			Category c=(Category)session.get(Category.class,cid);
+			session.delete(c);
+			session.getTransaction().commit();
+		}
 }
 

@@ -6,9 +6,11 @@ import com.model.Product;
 
 public interface ProductDAO {
 
-	public boolean saveProduct(Product product);
-	public List<Product> retrieveProduct();
-	public Product getProductById(int id);
-	public void updateProduct(Product p);
-	public void deleteProduct(int pid);
+	public void insertProduct(Product product);
+	public List<Product> retrieve();
+	public Product findByPID(int id);
+	public List <Product> getProdByCatId( int cid);
+	public void deleteProd(int pid);
+	public void update(Product p);
+	
 }

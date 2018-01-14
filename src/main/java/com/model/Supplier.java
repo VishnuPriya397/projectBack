@@ -9,44 +9,33 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Entity
-public class Supplier implements Serializable {
 
-	public Supplier(){
-		
-	}
-	private static final long serialVersionUID = 1L;
+
+public class Supplier implements Serializable
+{
 	
 	@Id
-	@GeneratedValue
 	private int sid;
-	private String suppliername;
-	private String supplieraddress;
-	@OneToMany(targetEntity=Product.class, fetch = FetchType.EAGER, mappedBy = "supplier", cascade = CascadeType.ALL)
-	 private Set<Product> products = new HashSet<Product>(0);
+	private String sname;
 	
+	@OneToMany(targetEntity=Product.class,fetch=FetchType.EAGER, mappedBy="supplier")
+	private Set<Product> product=new HashSet<Product>(0);
+    
 	public int getSid() {
 		return sid;
 	}
+
 	public void setSid(int sid) {
 		this.sid = sid;
 	}
-	public String getSuppliername() {
-		return suppliername;
-	}
-	public void setSuppliername(String suppliername) {
-		this.suppliername = suppliername;
-	}
-	public String getSupplieraddress() {
-		return supplieraddress;
-	}
-	public void setSupplieraddress(String supplieraddress) {
-		this.supplieraddress = supplieraddress;
-	}
-	public Set<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(Set<Product> products) {
-		this.products = products;
+
+	public String getSname() {
+		return sname;
 	}
 
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+	
+	
 }

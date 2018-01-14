@@ -21,14 +21,16 @@ public class UserDAOImpl implements UserDAO
 		this.sessionFactory=sessionFactory;
 	}
 
-public void insertUser(User user){
-
-	Session session=sessionFactory.openSession();
-	session.beginTransaction();
-	session.saveOrUpdate(user);
-	session.getTransaction().commit();
+	public void insertUser(User user)
+	{
 	
-}	
+		Session session=sessionFactory.openSession();
+	    session.beginTransaction();
+	    session.saveOrUpdate(user);
+		session.getTransaction().commit();
+
+	}
+
 }
 
 

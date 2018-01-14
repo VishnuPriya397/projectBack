@@ -12,18 +12,11 @@ import org.springframework.stereotype.Component;
 public class Category {
 
 	@Id
-	@GeneratedValue
-	private int cid;
+	int cid;
 	private String cname;
 	@OneToMany(targetEntity=Product.class, fetch = FetchType.EAGER, mappedBy = "category", cascade =CascadeType.ALL)
 	private Set<Product> products = new HashSet<Product>(0);
-	
-	public Set<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
+
 	public int getCid() {
 		return cid;
 	}
