@@ -54,6 +54,8 @@ private Properties getHiber()
     	lsfb.addAnnotatedClass(Supplier.class);
     	lsfb.addAnnotatedClass(Category.class);
     	lsfb.addAnnotatedClass(Product.class);
+    	lsfb.addAnnotatedClass(Cart.class);
+    	lsfb.addAnnotatedClass(Orders.class);
     	return lsfb.buildSessionFactory();
     }
     
@@ -89,11 +91,26 @@ private Properties getHiber()
     }
  
     @Autowired
-    @Bean(name="ProductDAO")
+    @Bean(name="productDAO")
     public ProductDAO saveprod(SessionFactory sessionFactory)
     {
     	return new ProductDAOImpl(sessionFactory);
     }
+    
+    @Autowired
+    @Bean(name="cartDAO")
+    public CartDAO saveCart(SessionFactory sessionFactory)
+    {
+    	return new CartDAOImpl(sessionFactory);
+    }
+    
+    @Autowired
+    @Bean(name="ordersDAO")
+    public OrdersDAO saveOrders(SessionFactory sessionFactory)
+    {
+    	return new OrdersDAOImpl(sessionFactory);
+    }
+
 }
 
 
