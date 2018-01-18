@@ -11,10 +11,11 @@ public class Cart {
 	@Id
 	int cartId;
 	private int pid;
-	private int userId;
+	private String email;
 	private double price;
 	private int productQuantity;
 	private String productName;
+	
 	
 	public String getProductName() {
 		return productName;
@@ -34,11 +35,12 @@ public class Cart {
 	public void setPid(int pid) {
 		this.pid = pid;
 	}
-	public int getUserId() {
-		return userId;
+    
+	public String getEmail() {
+		return email;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public double getPrice() {
 		return price;
@@ -59,6 +61,5 @@ public class Cart {
 		this.subTotal = subTotal;
 	}
 	private double subTotal;
-	
-	
+
 }

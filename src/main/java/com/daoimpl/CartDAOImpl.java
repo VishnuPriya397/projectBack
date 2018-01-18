@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dao.CartDAO;
 import com.model.Cart;
+import com.model.Product;
 
 @Repository
 public class CartDAOImpl implements CartDAO{
@@ -27,27 +29,45 @@ public class CartDAOImpl implements CartDAO{
  		this.sessionFactory = sessionFactory;
  	}
  	
-	@Transactional	
-	public boolean saveProductToCart(Cart cart) {
+ 	public  void insertCart(Cart cart) {
+		Session session=sessionFactory.openSession();
+		session.beginTransaction();
+		session.persist(cart);
+		session.getTransaction().commit();
+		}
+
+	/*public boolean saveProductToCart(Cart cart) {
 		sessionFactory.getCurrentSession().saveOrUpdate(cart);
 		return true;
-	}
+	}*/
 	
-	@Transactional
-	public Cart getitem(int prodId, int userId)
+
+	public Cart getitem(int pid, String email)
 	{
-		String hql = "from"+" Cart"+" where userid="+userId+" and productid="+prodId;
+		Session session=sessionFactory.openSession();
+		try{
+			Cart cart= null;
+			session.beginTransaction();
+			cart=(Cart) session.createQuery("from cart where pid=" +pid+"and email="+email).list();
+			session.getTransaction().commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			session.getTransaction().rollback();
+		}
+	/*	String hql = "from"+" Cart"+" where email="+email+" and pid="+pid;
 		Query query = sessionFactory.getCurrentSession().createQuery(hql);
 		@SuppressWarnings("unchecked")
 		List<Cart> list = (List<Cart>) query.list();
 		if (list!= null && !list.isEmpty()) {
 			return list.get(0);
-		}
+		}*/
 		return null;
 	}
 
 	@SuppressWarnings("unchecked")
-	@Transactional
+
 	public List<Cart> listCart() 
 	{
 		
@@ -78,8 +98,8 @@ public class CartDAOImpl implements CartDAO{
 	return null;
     }
 
-	@SuppressWarnings("unchecked")
-	@Transactional
+	/*@SuppressWarnings("unchecked")
+	
 	public List<Cart> listCartbyUserId(int userId) {
 		String hql = "from"+" Cart"+" where userId=" + userId;
 
@@ -87,7 +107,7 @@ public class CartDAOImpl implements CartDAO{
 		return lCart;
     }
 	
-	@Transactional
+	
 	public double CartPrice(int userId) {
 	Criteria c=sessionFactory.getCurrentSession().createCriteria(Cart.class);
 	c.add(Restrictions.eq("userId", userId));
@@ -97,7 +117,6 @@ public class CartDAOImpl implements CartDAO{
 	return l;
 	}
 	
-	@Transactional
 	public boolean removeCartById(int cart_id)
    {
 	 Object persistentInstance =sessionFactory.getCurrentSession().load(Cart.class, cart_id);
@@ -108,11 +127,10 @@ public class CartDAOImpl implements CartDAO{
 	    return false;
 	}
 	
-	@Transactional
 	public Cart editCartById(int cart_id) {
 	
 		Cart cart=	(Cart) sessionFactory.getCurrentSession().get(Cart.class,cart_id);
 	
 	return cart;
-}
+}*/
 }

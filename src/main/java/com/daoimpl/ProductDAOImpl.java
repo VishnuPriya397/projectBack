@@ -58,26 +58,7 @@ public class ProductDAOImpl implements ProductDAO {
 	return p;
 	
    }
-   
-	/*@SuppressWarnings("unchecked")
-	public List<Product> getProductByCategory(int cid) {
-		String hql = "from" + " Product" + " where id=" +cid;
-		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<Product> listProduct = (List<Product>) query.list();
-		if (listProduct != null && !listProduct.isEmpty()) {
-			return (List<Product>) listProduct.get(0);
-		}
-	return null;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Product> getProductByCategoryID(int cid) {
-		
-		String hql = "from Product where cid= "+cid;
-		Query query = sessionFactory.getCurrentSession().createQuery(hql);
-		List<Product> catproducts = (List<Product>) query.list();
-		return catproducts;
-	}*/
+ 
     @SuppressWarnings("unchecked")
 	public List<Product> getProdByCatId(int cid) {
 	Session session=sessionFactory.openSession();
