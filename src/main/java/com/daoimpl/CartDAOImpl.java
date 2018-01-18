@@ -97,5 +97,22 @@ public class CartDAOImpl implements CartDAO{
 	return l;
 	}
 	
+	@Transactional
+	public boolean removeCartById(int cart_id)
+   {
+	 Object persistentInstance =sessionFactory.getCurrentSession().load(Cart.class, cart_id);
+	    if (persistentInstance != null) {
+	    	sessionFactory.getCurrentSession().delete(persistentInstance);
+	        return true;
+	    }
+	    return false;
+	}
 	
+	@Transactional
+	public Cart editCartById(int cart_id) {
+	
+		Cart cart=	(Cart) sessionFactory.getCurrentSession().get(Cart.class,cart_id);
+	
+	return cart;
+}
 }

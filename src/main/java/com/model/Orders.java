@@ -28,7 +28,7 @@ public class Orders {
 	
 	private int productId;
 	
-	private int price;
+	private double price;
 	
 	private int productQuantity;
 		
@@ -96,11 +96,13 @@ public class Orders {
 		this.productId = productId;
 	}
 
-	public int getPrice() {
+	
+
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

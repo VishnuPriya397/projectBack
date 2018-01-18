@@ -56,6 +56,8 @@ private Properties getHiber()
     	lsfb.addAnnotatedClass(Product.class);
     	lsfb.addAnnotatedClass(Cart.class);
     	lsfb.addAnnotatedClass(Orders.class);
+    	lsfb.addAnnotatedClass(Payment.class);
+    	lsfb.addAnnotatedClass(Adress.class);
     	return lsfb.buildSessionFactory();
     }
     
@@ -111,11 +113,18 @@ private Properties getHiber()
     	return new OrdersDAOImpl(sessionFactory);
     }
 
+    @Autowired
+    @Bean(name="paymentDAO")
+    public PaymentDAO savePayment(SessionFactory sessionFactory)
+    {
+    	return new PaymentDAOImpl(sessionFactory);
+    }
+
+    @Autowired
+    @Bean(name="adressDAO")
+    public AdressDAO saveAdress(SessionFactory sessionFactory)
+    {
+    	return new AdressDAOImpl(sessionFactory);
+    }
+
 }
-
-
-
-
-
-
-	

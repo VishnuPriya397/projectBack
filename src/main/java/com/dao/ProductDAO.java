@@ -9,7 +9,9 @@ public interface ProductDAO {
 	public void insertProduct(Product product);
 	public List<Product> retrieve();
 	public Product findByPID(int id);
-	public List <Product> getProdByCatId( int cid);
+	//public List<Product> getProductByCategory(int cid);
+	//public List<Product> getProductByCategoryID(int cid);
+	public List <Product> getProdByCatId(int cid);
 	public void deleteProd(int pid);
 	public void update(Product p);
 	
