@@ -36,7 +36,7 @@ public class Order
 	private Timestamp updatedTimestamp;
 	
 	private String updatedBy;
-
+	
 	public String getOrderId() {
 		return orderId;
 	}

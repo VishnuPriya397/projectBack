@@ -20,9 +20,17 @@ public class Cart {
 	private double subTotal;
 	private String status;
 	private int userId;
-	private String email;	
+	private String email;
+	private String imagName;
+		
 	public String getEmail() {
 		return email;
+	}
+	public String getImagName() {
+		return imagName;
+	}
+	public void setImagName(String imagName) {
+		this.imagName = imagName;
 	}
 	public void setEmail(String email) {
 		this.email = email;
