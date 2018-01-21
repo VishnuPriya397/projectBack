@@ -1,8 +1,9 @@
 package com.daoimpl;
 
-import org.hibernate.HibernateException;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import com.dao.UserDAO;
@@ -31,20 +32,13 @@ public class UserDAOImpl implements UserDAO
 
 	}
 	
-	public User findUserByEmail(String email)
-	{
-		Session session= sessionFactory.openSession();
-		User u=null;
-		try{
-			session.beginTransaction();
-			u=(User) session.get(User.class,email);
-			session.getTransaction().commit();
-		}
-		catch(HibernateException e)
-		{
-			e.printStackTrace();
-		}
-		return u;
+	
+	public User getUserId(String email) {
+
+		Criteria c=sessionFactory.openSession().createCriteria(User.class);
+		c.add(Restrictions.eq("email", email));
+		
+		return  (User) c.uniqueResult();
 	}
 
 }

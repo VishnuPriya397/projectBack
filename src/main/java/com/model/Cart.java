@@ -1,5 +1,6 @@
 package com.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,46 +8,48 @@ import javax.persistence.Id;
 @Entity
 public class Cart {
 
-	@GeneratedValue
+	@Column(name="cart_id")
 	@Id
-	int cartId;
-	private int pid;
-	private String email;
-	private double price;
-	private int productQuantity;
+	@GeneratedValue
+	private int cartid;
+	
+	private int productid;
 	private String productName;
-	
-	
-	public String getProductName() {
-		return productName;
-	}
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-	public int getCartId() {
-		return cartId;
-	}
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
-	public int getPid() {
-		return pid;
-	}
-	public void setPid(int pid) {
-		this.pid = pid;
-	}
-    
+	private double productPrice;
+	private int productQuantity;
+	private double subTotal;
+	private String status;
+	private int userId;
+	private String email;	
 	public String getEmail() {
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public double getPrice() {
-		return price;
+	public int getCartid() {
+		return cartid;
 	}
-	public void setPrice(double d) {
-		this.price = d;
+	public void setCartid(int cartid) {
+		this.cartid = cartid;
+	}
+	public int getProductid() {
+		return productid;
+	}
+	public void setProductid(int productid) {
+		this.productid = productid;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public double getProductPrice() {
+		return productPrice;
+	}
+	public void setProductPrice(double productPrice) {
+		this.productPrice = productPrice;
 	}
 	public int getProductQuantity() {
 		return productQuantity;
@@ -60,6 +63,17 @@ public class Cart {
 	public void setSubTotal(double subTotal) {
 		this.subTotal = subTotal;
 	}
-	private double subTotal;
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 
-}
+	}

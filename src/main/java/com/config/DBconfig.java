@@ -14,9 +14,31 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.dao.*;
-import com.daoimpl.*;
-import com.model.*;
+import com.dao.AddressDAO;
+import com.dao.CartDAO;
+import com.dao.CategoryDAO;
+import com.dao.OrderDAO;
+
+import com.dao.PaymentDAO;
+import com.dao.ProductDAO;
+import com.dao.SupplierDAO;
+import com.dao.UserDAO;
+import com.daoimpl.AddressDAOImpl;
+import com.daoimpl.CartDAOImpl;
+import com.daoimpl.CategoryDAOImpl;
+import com.daoimpl.OrderDAOImpl;
+import com.daoimpl.PaymentDAOImpl;
+import com.daoimpl.ProductDAOImpl;
+import com.daoimpl.SupplierDAOImpl;
+import com.daoimpl.UserDAOImpl;
+import com.model.Address;
+import com.model.Cart;
+import com.model.Category;
+import com.model.Order;
+import com.model.Payment;
+import com.model.Product;
+import com.model.Supplier;
+import com.model.User;
 
 @Configuration
 @ComponentScan("com")
@@ -55,9 +77,9 @@ private Properties getHiber()
     	lsfb.addAnnotatedClass(Category.class);
     	lsfb.addAnnotatedClass(Product.class);
     	lsfb.addAnnotatedClass(Cart.class);
-    	lsfb.addAnnotatedClass(Orders.class);
+    	lsfb.addAnnotatedClass(Order.class);
     	lsfb.addAnnotatedClass(Payment.class);
-    	lsfb.addAnnotatedClass(Adress.class);
+    	lsfb.addAnnotatedClass(Address.class);
     	return lsfb.buildSessionFactory();
     }
     
@@ -100,31 +122,34 @@ private Properties getHiber()
     }
     
     @Autowired
-    @Bean(name="cartDAO")
-    public CartDAO saveCart(SessionFactory sessionFactory)
-    {
-    	return new CartDAOImpl(sessionFactory);
-    }
-    
-    @Autowired
-    @Bean(name="ordersDAO")
-    public OrdersDAO saveOrders(SessionFactory sessionFactory)
-    {
-    	return new OrdersDAOImpl(sessionFactory);
-    }
+	@Bean(name="cartDAO")
+	public CartDAO getCart(SessionFactory sessionFactory)
+	{
+		return new CartDAOImpl(sessionFactory);
+		
+	}
+	@Autowired
+	@Bean(name = "addressDAO")
+	public AddressDAO getAddressDAO(SessionFactory sessionFactory)
+	{
 
-    @Autowired
-    @Bean(name="paymentDAO")
-    public PaymentDAO savePayment(SessionFactory sessionFactory)
-    {
-    	return new PaymentDAOImpl(sessionFactory);
-    }
+		return new AddressDAOImpl(sessionFactory);
+	}
+	
+	
+	@Autowired
+	@Bean(name = "orderDAO")
+	public OrderDAO getOrdersDAO(SessionFactory sessionFactory)
+	{
 
-    @Autowired
-    @Bean(name="adressDAO")
-    public AdressDAO saveAdress(SessionFactory sessionFactory)
-    {
-    	return new AdressDAOImpl(sessionFactory);
-    }
+		return new OrderDAOImpl(sessionFactory);
+	}
+	@Autowired
+	@Bean(name = "paymentDAO")
+	public PaymentDAO getPaymentDAO(SessionFactory sessionFactory)
+	{
+
+		return new PaymentDAOImpl(sessionFactory);
+	}
 
 }

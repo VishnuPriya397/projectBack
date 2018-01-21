@@ -30,9 +30,7 @@ public class Payment {
 		
 	private int userId;
 	
-	private double totalAmount;
-
-	public int getId() {
+	private double totalAmount;	public int getId() {
 		return id;
 	}
 

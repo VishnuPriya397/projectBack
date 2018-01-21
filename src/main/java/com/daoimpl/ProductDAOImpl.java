@@ -29,7 +29,7 @@ public class ProductDAOImpl implements ProductDAO {
 	public  void insertProduct(Product product) {
 		Session session=sessionFactory.openSession();
 		session.beginTransaction();
-		session.persist(product);
+		session.saveOrUpdate(product);
 		session.getTransaction().commit();
 		}
 
@@ -77,6 +77,14 @@ public class ProductDAOImpl implements ProductDAO {
 	return prod;
    }
 
+    @Transactional
+    public List<Product> getProductByCategoryID(int cid) {
+    	String hql = "from Product where cid= "+cid;
+    	Query query = sessionFactory.getCurrentSession().createQuery(hql);
+    	List<Product> catproducts = (List<Product>) query.list();
+    	return catproducts;
+
+    }
    public void deleteProd(int pid)
    {
 	Session session=sessionFactory.openSession();

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Entity
 @Table
 @Component
-public class Adress {
+public class Address {
 	
 	@Id
 	@GeneratedValue
@@ -56,6 +56,14 @@ public class Adress {
 	private Timestamp updatedTimestamp;
 	
 	private String updatedBy;
+
+	public int getPersonId() {
+		return personId;
+	}
+
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
 
 	public int getId() {
 		return id;
@@ -135,14 +143,6 @@ public class Adress {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
-	}
-
-	public int getPersonId() {
-		return personId;
-	}
-
-	public void setPersonId(int personId) {
-		this.personId = personId;
 	}
 
 	public String getAddressType() {

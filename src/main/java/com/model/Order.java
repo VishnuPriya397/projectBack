@@ -6,13 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.stereotype.Component;
-
 @Entity
-@Table
-@Component
-public class Orders {
-
+@Table(name="Order_details")
+public class Order
+{
 	@Id
 	private String orderId;
 	
@@ -96,8 +93,6 @@ public class Orders {
 		this.productId = productId;
 	}
 
-	
-
 	public double getPrice() {
 		return price;
 	}
@@ -145,5 +140,9 @@ public class Orders {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+	
+	
+	
+	
 	
 }
