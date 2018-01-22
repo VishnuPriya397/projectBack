@@ -37,6 +37,16 @@ public class Order
 	
 	private String updatedBy;
 	
+	private String imagName;
+	
+	public String getImagName() {
+		return imagName;
+	}
+
+	public void setImagName(String imagName) {
+		this.imagName = imagName;
+	}
+
 	public String getOrderId() {
 		return orderId;
 	}
